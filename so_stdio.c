@@ -36,7 +36,7 @@ SO_FILE *so_fopen(const char *pathname, const char *mode){
 	else if(!strcmp(mode, "a+")) {
 		ret = open(pathname, O_RDONLY| O_APPEND| O_CREAT, 0666);
 	}
-	if(ret > 2) {
+	if(ret > 0) {
 		file->fd = ret;
 		return file;
 	}
