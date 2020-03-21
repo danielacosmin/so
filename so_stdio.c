@@ -13,7 +13,7 @@ typedef struct _so_file{
 
 SO_FILE *so_fopen(const char *pathname, const char *mode){
 
-	SO_FILE *file = (SO_FILE *)calloc(1,sizeof(SO_FILE));
+	SO_FILE *file = (SO_FILE *)malloc(sizeof(SO_FILE));
 	file->buf = (char*)calloc(4096 , sizeof(char));
 	file->cursor = 0;
 	int ret = 0;
@@ -36,7 +36,13 @@ SO_FILE *so_fopen(const char *pathname, const char *mode){
 	else if(!strcmp(mode, "a+")) {
 		ret = open(pathname, O_RDONLY| O_APPEND| O_CREAT, 0666);
 	}
-	if(ret > 0) {
+	else {	
+		free(file->buf);
+		free(file);
+		return NULL;
+	}
+
+	if(ret != -1) {
 		file->fd = ret;
 		return file;
 	}
@@ -99,16 +105,14 @@ int so_fgetc(SO_FILE *stream){
 }
 int so_fputc(int c, SO_FILE *stream){
 	
-
+	/*
 	read(stream->fd,stream->buf,4096);
-	//printf("inainte de memset= %s",stream->buf);
 	memset(stream->buf + stream->cursor, (unsigned char)c, 1);
-	//printf("\nstring = \n%s\n",stream->buf);
 	int ret = write(stream->fd, stream->buf, 4096);
 	if(ret == -1) {
 		return SO_EOF;
 	}
-	stream->cursor++;
+	stream->cursor++;*/
 	return c;	
 }
 int so_feof(SO_FILE *stream){
