@@ -1,19 +1,19 @@
 #include "so_stdio.h"
 #include<stdio.h>
+#include <string.h>
 
 
-int main(){
-
-	SO_FILE *f = so_fopen("laba","r");
+int main()
+{
+	SO_FILE *f = so_fopen("testmare", "r");
 	
-	for(int i = 0 ; i < 100; i++){
-		printf("%d ",so_fgetc(f));
-	}
-	//so_fputc(98,f);
-	for(int i = 0 ; i < 100; i++){
-	//	printf("%d", so_fgetc(f));
-		
-	}
+	char *ptr =malloc(16000);
+	so_fread(ptr, 1, 16000, f);
+	//for(int i = 0 ; i < 16000; i++){
+	//	c = so_fputc(97,f);
+	//
+	//}
+	free(ptr);
+	so_fclose(f);
 	return 0;
-
 }

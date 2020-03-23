@@ -1,0 +1,30 @@
+
+COSMIN DANIELA 332CC - Tema 2 SO
+
+Organizare:
+	-ideea mea de rezolvare consta in retinerea anumitor flaguri in structura SO_FILE (pe langa campurile pricipale ale acesteia: filedescriptor, buffer) cu ajutorul carora se pot determina actiunile care vor fi luate in sensul manipularii datelor din aceasta. 
+	-campurile structurii : 
+
+		-cursor = intreg ce imita functionalitatea cursorului de fisier deja existent, folosit ca variabila returnata de functia ftell;
+
+		-last_op = caracter ce indica daca ultima operatie a fost read('r') sau write('w') astfel: 
+			-daca last_op este 'r' => in fseek va trebui ca bufferul sa fie reinitalizat cu 0
+			-daca last_op este 'w' => in fseek , fclose si fflush trebuie printate datele ce se alfa la acel moment in acesta in fisier
+
+		-err = flag care se activeaza atunci cand ultima operatie nu s-a putut realiza( folosit la so_ferr ca valoare de retur)
+
+		-bytes_added = variabila ce are un rol vital in procesul de buffering si semnifica numarul de bytes scrisi in buffer intr-un anumit moment; cand variabila ajunge la dimensiunea bufferului aceasta se reseteaza la 0 pentru ca s-a semnalat ca bufferul este plin si trebuie luata o actiune(golirea bufferului in cazul lui fgetc, scrierea in fisier si apoi golirea lui ca sa se poata pune un caracter in fputc)
+
+	- interactiune intre functii : functiile de fread si fwrite apeleaza functiile de fgetc respectiv fputc intr-un mod asemanator( iterez prin numarul de elemente * dim lor si pentru fiecare byte apelez functiile respective, verificand daca dau sau nu eroare;
+	
+	- consider ca aceasta tema este una utila atat la nivel teoretic cat si practic, intrucat sedimenteaza cunostintele dobandite la curs & laborator. Daca inainte de aceasta tema eram capabila doar de a lucra cu apelurile de sistem uzuale, acum pot spune ca am invatat si cum acestea sunt implementate si interactioneaza intre ele. Am invatat ca este foarte important sa verific de fiecare data ce returneaza un apel de sistem (in tema folosesc variabila ret pt acest lucru).
+
+Implementare: 
+	-am implementat tot ce scria in tema mai putin partea de procese si functia ce imi verifica daca s-a ajuns sau nu la EOF.
+	-dificultatile pe care le-am intampinat la aceasta tema au fost problemele cu memoria(pe care le-am rezolvat cu valgrind si printuri peste tot in cod) si intelegerea anumitor output-uri de la teste ( si ulterior schimbarea modului meu de rezolvare dupa intelegerea acestora).
+	-un lucru interesant pe care l-am aflat atuci cand testam manual a fost ca editorul vim printeaza caracterul NULL sub forma "@^" de culoare albastra, pe langa utilitarul cat care nu le afiseaza. Cu ajutorul acestei informatii mi-am dat seama ce faceam gresit in cod(printam BUFSIZE elemente in fisier in loc de numarul fix de caractere de la acel moment).
+
+Bibliografie:
+	-resursele oferite in enuntul temei legate de coding style-ul de kernel
+	-laboratorul 1 pentru a realiza Makefile-ul
+	-paginile de man de la apelurile de sistem folosite pentru a intelege mai bine 
