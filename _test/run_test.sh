@@ -15,7 +15,7 @@ max_points=95
 # change this of you want to keep the logs after execution
 DO_CLEANUP=${DO_CLEANUP:-yes}
 
-TEST_LIB='_test/test_lib.sh'
+TEST_LIB=_test/test_lib.sh
 CHECK_SKIP='_test/'
 
 # load the lib functions
